@@ -1,0 +1,34 @@
+{
+  "name": "overwatchvoter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "budo client/index.js --live -- -t [ sheetify/transform -u sheetify-cssnext ] -t es2020",
+    "build": "browserify -t [ sheetify/transform -u sheetify-cssnext ] -t es2020 client/index.js | uglifyjs -mc > dist/index.js",
+    "deploy": "npm run build && surge dist"
+  },
+  "keywords": [],
+  "author": "David Guttman <david@guttman.io> (http://davidguttman.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "async-cache": "^1.1.0",
+    "basscss": "^8.0.2",
+    "budo": "^9.2.1",
+    "choo": "^3.3.0",
+    "cssify": "^1.0.3",
+    "es2020": "^1.1.9",
+    "firebase": "^3.5.0",
+    "lodash": "^4.16.4",
+    "normalize.css": "^5.0.0",
+    "observ-varhash": "^1.0.8",
+    "sheetify": "^5.1.1",
+    "sheetify-cssnext": "^1.0.7",
+    "tachyons": "^4.5.4"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "surge": "^0.18.0",
+    "uglify-js": "^2.7.3"
+  }
+}

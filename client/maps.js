@@ -1,0 +1,15 @@
+module.exports = [
+  {name: 'Dorado', type: 'escort'},
+  {name: 'Eichenwalde', type: 'hybrid'},
+  {name: 'Hanamura', type: 'assault'},
+  {name: 'Hollywood', type: 'hybrid'},
+  {name: 'Ilios', type: 'control', variations: ['Lighthouse', 'Well', 'Ruins']},
+  {name: "King's Row", type: 'hybrid'},
+  {name: 'Lijiang Tower', type: 'control', variations: ['Night Market', 'Garden', 'Control Center']},
+  {name: 'Nepal', type: 'control', variations: ['Village', 'Shrine', 'Sanctum']},
+  {name: 'Numbani', type: 'hybrid'},
+  {name: 'Route 66', type: 'escort'},
+  {name: 'Temple of Anubis', type: 'assault'},
+  {name: 'Volskaya Industries', type: 'assault'},
+  {name: 'Watchpoint: Gibraltar', type: 'escort'},
+]

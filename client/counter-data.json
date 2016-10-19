@@ -1,0 +1,266 @@
+{
+  "Ana": {
+    "strongAgainst": [
+      "Lucio",
+      "Mercy",
+      "Zenyatta"
+    ],
+    "weakAgainst": [
+      "Genji",
+      "Reaper",
+      "Tracer"
+    ]
+  },
+  "Bastion": {
+    "strongAgainst": [
+      "Mercy",
+      "Reinhardt",
+      "Winston"
+    ],
+    "weakAgainst": [
+      "Genji",
+      "Tracer",
+      "Widowmaker"
+    ]
+  },
+  "D.Va": {
+    "strongAgainst": [
+      "Pharah",
+      "Reinhardt",
+      "Widowmaker"
+    ],
+    "weakAgainst": [
+      "Mei",
+      "Symmetra",
+      "Zenyatta"
+    ]
+  },
+  "Genji": {
+    "strongAgainst": [
+      "Bastion",
+      "Mercy",
+      "Torbjorn"
+    ],
+    "weakAgainst": [
+      "Mei",
+      "Zarya",
+      "Winston"
+    ]
+  },
+  "Hanzo": {
+    "strongAgainst": [
+      "Bastion",
+      "Torbjorn",
+      "Widowmaker"
+    ],
+    "weakAgainst": [
+      "D.Va",
+      "Tracer",
+      "Widowmaker"
+    ]
+  },
+  "Junkrat": {
+    "strongAgainst": [
+      "Bastion",
+      "Mei",
+      "Torbjorn"
+    ],
+    "weakAgainst": [
+      "McCree",
+      "Pharah",
+      "Widowmaker"
+    ]
+  },
+  "Lucio": {
+    "strongAgainst": [
+      "D.Va",
+      "Reaper",
+      "Winston"
+    ],
+    "weakAgainst": [
+      "Mei",
+      "McCree",
+      "Pharah"
+    ]
+  },
+  "McCree": {
+    "strongAgainst": [
+      "Reaper",
+      "Tracer",
+      "Winston"
+    ],
+    "weakAgainst": [
+      "Genji",
+      "Soldier: 76",
+      "Widowmaker"
+    ]
+  },
+  "Mei": {
+    "strongAgainst": [
+      "Genji",
+      "Winston",
+      "Tracer"
+    ],
+    "weakAgainst": [
+      "Junkrat",
+      "Pharah",
+      "Widowmaker"
+    ]
+  },
+  "Mercy": {
+    "strongAgainst": [
+      "-",
+      "-",
+      "-"
+    ],
+    "weakAgainst": [
+      "McCree",
+      "Tracer",
+      "Widowmaker"
+    ]
+  },
+  "Pharah": {
+    "strongAgainst": [
+      "Bastion",
+      "Junkrat",
+      "Mei"
+    ],
+    "weakAgainst": [
+      "McCree",
+      "Roadhog",
+      "Soldier: 76"
+    ]
+  },
+  "Reaper": {
+    "strongAgainst": [
+      "Bastion",
+      "Mei",
+      "Winston"
+    ],
+    "weakAgainst": [
+      "Junkrat",
+      "McCree",
+      "Pharah"
+    ]
+  },
+  "Reinhardt": {
+    "strongAgainst": [
+      "Soldier: 76",
+      "Torbjorn",
+      "Widowmaker"
+    ],
+    "weakAgainst": [
+      "Reaper",
+      "Roadhog",
+      "Symmetra"
+    ]
+  },
+  "Roadhog": {
+    "strongAgainst": [
+      "Pharah",
+      "Reinhardt",
+      "Tracer"
+    ],
+    "weakAgainst": [
+      "D.Va",
+      "Genji",
+      "Reaper"
+    ]
+  },
+  "Soldier: 76": {
+    "strongAgainst": [
+      "Mercy",
+      "Pharah",
+      "Torbjorn"
+    ],
+    "weakAgainst": [
+      "Genji",
+      "Mei",
+      "Tracer"
+    ]
+  },
+  "Symmetra": {
+    "strongAgainst": [
+      "Bastion",
+      "D.Va",
+      "Reinhardt"
+    ],
+    "weakAgainst": [
+      "Junkrat",
+      "Pharah",
+      "Roadhog"
+    ]
+  },
+  "Torbjorn": {
+    "strongAgainst": [
+      "Genji",
+      "Lucio",
+      "Tracer"
+    ],
+    "weakAgainst": [
+      "Junkrat",
+      "Pharah",
+      "Widowmaker"
+    ]
+  },
+  "Tracer": {
+    "strongAgainst": [
+      "Bastion",
+      "Mercy",
+      "Widowmaker"
+    ],
+    "weakAgainst": [
+      "McCree",
+      "Mei",
+      "Soldier: 76"
+    ]
+  },
+  "Widowmaker": {
+    "strongAgainst": [
+      "Bastion",
+      "Torbjorn",
+      "Pharah"
+    ],
+    "weakAgainst": [
+      "D.Va",
+      "Genji",
+      "Winston"
+    ]
+  },
+  "Winston": {
+    "strongAgainst": [
+      "Genji",
+      "Hanzo",
+      "Widowmaker"
+    ],
+    "weakAgainst": [
+      "McCree",
+      "Mei",
+      "Reaper"
+    ]
+  },
+  "Zarya": {
+    "strongAgainst": [
+      "D.Va",
+      "Genji",
+      "Winston"
+    ],
+    "weakAgainst": [
+      "Pharah",
+      "Roadhog",
+      "Reaper"
+    ]
+  },
+  "Zenyatta": {
+    "strongAgainst": [
+      "D.Va",
+      "Roadhog",
+      "Winston"
+    ],
+    "weakAgainst": [
+      "Hanzo",
+      "Tracer",
+      "Widowmaker"
+    ]
+  }
+}
