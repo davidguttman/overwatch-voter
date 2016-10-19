@@ -17,6 +17,15 @@ module.exports = {
       if (err) return done(err)
       send('setRatings', results, done)
     })
+  },
+
+  rateCombo: function (data, state, send, done) {
+    send('setRating', data, function () { })
+
+    db.setRating(data.asHero, data.againstHero, data.rating, function (err) {
+      if (err) return done(err)
+      send('cancelEditCombo', null, done)
+    })
   }
 }
 

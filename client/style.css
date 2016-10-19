@@ -1,8 +1,9 @@
 .table-header-rotated {
   border-collapse: collapse;
+  font-size: 80%;
 }
 .table-header-rotated td {
-  width: 30px;
+  width: 20px;
 }
 .table-header-rotated th {
   padding: 5px 10px;
@@ -19,7 +20,7 @@
 .table-header-rotated th.rotate > div {
   -webkit-transform: translate(25px, 51px) rotate(315deg);
           transform: translate(25px, 51px) rotate(315deg);
-  width: 30px;
+  width: 20px;
 }
 .table-header-rotated th.rotate > div > span {
   border-bottom: 1px solid #ccc;
@@ -28,4 +29,8 @@
 .table-header-rotated th.row-header {
   padding: 0 10px;
   border-bottom: 1px solid #ccc;
+}
+
+a {
+  cursor: pointer;
 }

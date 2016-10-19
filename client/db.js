@@ -35,7 +35,7 @@ function createKey (asHero, againstHero) {
 
 function query (ref, _key, cb) {
   var key = _key.replace(/\./g, '')
-  ref.database().ref().child(key).orderByPriority().on('value', function(snap) {
+  ref.database().ref().child(key).orderByPriority().once('value', function(snap) {
     cb(null, snap)
   }, cb)
 }
@@ -68,7 +68,13 @@ function setRating (asHero, againstHero, rating, cb) {
 
   localStorage.setItem(pairKey, rating)
   var ratingKey = ['heroCounters', pairKey, uid].join('/')
-  ref.database().ref().child(ratingKey).setWithPriority(rating, rating)
+  ref
+    .database()
+    .ref()
+    .child(ratingKey)
+    .setWithPriority(rating, rating)
+    .catch(cb)
+    .then(function () { cb() })
 }
 
 function getRating (asHero, againstHero, cb) {
