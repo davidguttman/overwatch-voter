@@ -4,6 +4,7 @@ const choo = require('choo')
 const db = require('./db')
 const maps = require('./maps')
 
+const model = require('./model')
 const mainView = require('./main')
 
 css('normalize.css')
@@ -12,12 +13,7 @@ css('./style.css', { global: true })
 
 const app = choo()
 
-app.model({
-  state: { title: 'Not quite set yet' },
-  reducers: {
-    update: (data, state) => ({ title: data })
-  }
-})
+app.model(model)
 
 app.router((route) => [
   route('/', mainView)

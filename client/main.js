@@ -1,14 +1,17 @@
+const get = require('lodash/get')
 const html = require('choo/html')
 
 const heroes = require('./heroes')
 const counters = require('./counters')
 
 const mainView = module.exports = (state, prev, send) => html`
-  <main class="cf pa3 pa4-m pa5-l mw9 center">
+  <main onload=${onLoad.bind(this, send)} class="cf pa3 pa4-m pa5-l mw9 center">
     ${renderHeader()}
-    ${renderTable()}
+    ${renderTable(state)}
   </main>
 `
+
+function onLoad (send) { send('fetchAll') }
 
 function renderHeader () {
   return html`
@@ -30,7 +33,7 @@ function renderHeader () {
   `
 }
 
-function renderTable () {
+function renderTable (state) {
   return html`
     <div>
       <table class='table table-header-rotated'>
@@ -45,38 +48,39 @@ function renderTable () {
           </tr>
         </thead>
         <tbody>
-          ${heroes.map(renderRow)}
+          ${heroes.map(renderRow.bind(this, state))}
         </tbody>
       </table>
     </div>
   `
 }
 
-function renderRow (agHero) {
+function renderRow (state, agHero) {
   return html`
     <tr>
       <th class='row-header'>${agHero.name}</th>
         ${heroes.map( (asHero, j) => {
-          return renderCell(asHero, agHero)
+          return renderCell(state, asHero, agHero)
         } )}
     </tr>
   `
 }
 
-function renderCell (asHero, agHero) {
+function renderCell (state, asHero, agHero) {
   var value = ''
   var style = 'bg-light-gray'
   if (agHero.name === asHero.name) value = ''
 
-  var rating = counters[asHero.name][agHero.name]
+  var rating = get(state.heroCounters, [asHero.name, agHero.name])
+
   if (rating) {
-    value = rating
+    value = {5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F'}[rating.rating]
     style = {
-      A: 'bg-light-green',
-      B: 'bg-washed-green',
-      D: 'bg-washed-red',
-      F: 'bg-light-red'
-    }[rating]
+      5: 'bg-light-green',
+      4: 'bg-washed-green',
+      2: 'bg-washed-red',
+      1: 'bg-light-red'
+    }[rating.rating]
   }
 
   return html` <td class=${style}>${value}</td> `

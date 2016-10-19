@@ -12,6 +12,7 @@
   "author": "David Guttman <david@guttman.io> (http://davidguttman.com/)",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.1.2",
     "async-cache": "^1.1.0",
     "basscss": "^8.0.2",
     "budo": "^9.2.1",
