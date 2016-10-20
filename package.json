@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "budo client/index.js --live -- -t [ sheetify/transform -u sheetify-cssnext ] -t es2020",
-    "build": "browserify -t [ sheetify/transform -u sheetify-cssnext ] -t es2020 client/index.js | uglifyjs -mc > dist/index.js",
+    "build": "browserify client/index.js -t [ sheetify/transform -u sheetify-cssnext ] -t es2020 | uglifyjs -mc > dist/index.js",
     "deploy": "npm run build && surge dist"
   },
   "keywords": [],
