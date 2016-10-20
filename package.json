@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "budo client/index.js --live -- -t [ sheetify/transform -u sheetify-cssnext ] -t es2020",
-    "build": "browserify client/index.js -t [ sheetify/transform -u sheetify-cssnext ] -t es2020 | uglifyjs -mc > dist/index.js",
+    "build": "browserify client/index.js -t [ sheetify/transform -u sheetify-cssnext ] -t es2020 -p [ css-extract -o dist/bundle.css ] | uglifyjs -mc > dist/index.js && cssnano dist/bundle.css dist/bundle.min.css",
     "deploy": "npm run build && surge dist"
   },
   "keywords": [],
@@ -29,6 +29,8 @@
   },
   "devDependencies": {
     "browserify": "^13.1.0",
+    "css-extract": "^1.1.3",
+    "cssnano-cli": "^1.0.5",
     "surge": "^0.18.0",
     "uglify-js": "^2.7.3"
   }
