@@ -18,10 +18,18 @@ const mainView = module.exports = function (state, prev, send) {
       <main
         class="cf pa3 pa4-m pa5-l mw9 center" >
         ${renderHeader()}
-        ${ state.editTarget ? renderEdit() : renderTable()}
+        ${
+          state.loading
+          ? renderLoading()
+          : state.editTarget
+            ? renderEdit()
+            : renderTable()
+        }
       </main>
     `
   }
+
+  function renderLoading () { return html`<div class='spinner'></div>` }
 
   function renderHeader () {
     return html`

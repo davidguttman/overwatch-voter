@@ -1,16 +1,14 @@
-// const storage = require('./storage')
 const effects = require('./effects')
 const reducers = require('./reducers')
-// const subscriptions = require('./subscriptions')
 
 const state = {
   editTarget: null,
-  heroCounters: {}
+  heroCounters: {},
+  loading: true
 }
 
 module.exports = {
-  state,
-  effects,
-  reducers,
-  // subscriptions
+  state: state,
+  effects: effects,
+  reducers: reducers
 }

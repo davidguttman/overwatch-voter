@@ -6,6 +6,7 @@ module.exports = {
       set(heroCounters, [combo.asHero, combo.againstHero], combo)
     })
     state.heroCounters = heroCounters
+    state.loading = false
     return state
   },
 
