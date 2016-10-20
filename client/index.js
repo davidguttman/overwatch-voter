@@ -1,9 +1,6 @@
 const css = require('sheetify')
 const choo = require('choo')
 
-const db = require('./db')
-const maps = require('./maps')
-
 const model = require('./model')
 const mainView = require('./main')
 
