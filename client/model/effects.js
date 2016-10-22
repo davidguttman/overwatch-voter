@@ -1,7 +1,7 @@
 const mapLimit = require('async/mapLimit')
 
-const db = require('./db')
-const heroes = require('./heroes')
+const db = require('../db')
+const heroes = require('../data/heroes')
 
 module.exports = {
   fetchAll: function (data, state, send, done) {

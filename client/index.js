@@ -1,19 +1,16 @@
 const css = require('sheetify')
 const choo = require('choo')
 
-const model = require('./model')
-const mainView = require('./main')
-
 css('normalize.css')
 css('tachyons')
 css('./style.css', { global: true })
 
 const app = choo()
 
-app.model(model)
+app.model(require('./model'))
 
 app.router((route) => [
-  route('/', mainView)
+  route('/', require('./views/main'))
 ])
 
 const tree = app.start()

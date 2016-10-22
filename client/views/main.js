@@ -1,7 +1,7 @@
 const get = require('lodash/get')
 const html = require('choo/html')
 
-const heroes = require('./heroes')
+const heroes = require('../data/heroes')
 
 var fetched = false
 const mainView = module.exports = function (state, prev, send) {
