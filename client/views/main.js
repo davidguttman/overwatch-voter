@@ -168,12 +168,12 @@ const mainView = module.exports = function (state, prev, send) {
     if (rating) {
       value = {5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F', undefined: '?'}[rating.rating]
       style = {
-        5: 'white bg-green',
-        4: 'light-gray bg-dark-green',
-        3: 'light-silver bg-dark-gray',
-        2: 'light-gray bg-dark-red',
-        1: 'white bg-red',
-        undefined: 'light-silver bg-dark-gray',
+        5: 'white rank-a',
+        4: 'light-gray rank-b',
+        3: 'light-silver rank-c',
+        2: 'light-gray rank-d',
+        1: 'white rank-f',
+        undefined: 'light-silver rank-c',
       }[rating.rating]
     }
 
