@@ -142,7 +142,7 @@ const mainView = module.exports = function (state, prev, send) {
   }
 
   function renderCell (asHero, agHero) {
-    var value = ''
+    var value = '?'
     var style = 'bg-light-gray'
     if (agHero.name === asHero.name) return html`<td></td>`
 

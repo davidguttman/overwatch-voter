@@ -13,10 +13,18 @@ module.exports = {
       })
     })
 
-    mapLimit(combos, 16, getCombo, function (err, results) {
+    mapLimit(combos, 64, spy, function (err, results) {
       if (err) return done(err)
       send('setRatings', results, done)
     })
+
+    function spy (combo, cb) {
+      getCombo(combo, function (err, res) {
+        if (err) return cb(err)
+        cb(null, res)
+        send('setRating', res, function () {})
+      })
+    }
   },
 
   rateCombo: function (data, state, send, done) {
