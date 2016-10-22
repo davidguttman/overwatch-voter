@@ -16,16 +16,13 @@ const mainView = module.exports = function (state, prev, send) {
   function render () {
     return html`
       <main class="cf pa3 pa4-m pa5-l mw9 center">
-        ${ state.loading ? renderLoading() : '' }
-
-        ${ state.editTarget
-          ? renderEdit()
-          : html`
-            <div>
-              ${ renderHeader() }
-              ${ renderTable() }
-            </div>
-          `
+        ${renderHeader()}
+        ${
+          state.loading
+          ? renderLoading()
+          : state.editTarget
+            ? renderEdit()
+            : renderTable()
         }
       </main>
     `
@@ -36,8 +33,7 @@ const mainView = module.exports = function (state, prev, send) {
   function renderHeader () {
     return html`
       <div>
-        <div class='fl w-25 pa2'></div>
-        <div class="fl w-75 pa2">
+        <div class="w-100 w-80-l">
           <p class="f6">
             Overwatch Counters Guide
           </p>
@@ -46,6 +42,18 @@ const mainView = module.exports = function (state, prev, send) {
           </h1>
         </div>
 
+        <nav class="mw7 mt2">
+          <a
+            class="f6 f5-l link white-80 dib pr3 dim"
+            href="/counters" >
+            Counterpicks
+          </a>
+          <a
+            class="f6 f5-l link white-80 dib pr3 dim"
+            href="/maps" >
+            Maps
+          </a>
+        </nav>
       </div>
     `
   }
@@ -53,7 +61,7 @@ const mainView = module.exports = function (state, prev, send) {
   function renderEdit () {
     var asHero = state.editTarget.asHero
     var againstHero = state.editTarget.againstHero
-    var letterStyle = "f1 link grow b no-underline dib ph2 pv1"
+    var letterStyle = "f1 link grow b no-underline black dib ph2 pv1"
 
     function rate (rating) {
       send('rateCombo', {
@@ -77,7 +85,7 @@ const mainView = module.exports = function (state, prev, send) {
           </a>
           <a
             onclick=${(e) => rate(4)}
-            class=${'hover-dark-green ' + letterStyle} >
+            class=${'hover-light-green ' + letterStyle} >
             B
           </a>
           <a
@@ -87,7 +95,7 @@ const mainView = module.exports = function (state, prev, send) {
           </a>
           <a
             onclick=${(e) => rate(2)}
-            class=${'hover-dark-red ' + letterStyle} >
+            class=${'hover-light-red ' + letterStyle} >
             D
           </a>
           <a
@@ -111,33 +119,21 @@ const mainView = module.exports = function (state, prev, send) {
   function renderTable () {
     return html`
       <div class=''>
-        <article class='fl w-25 pa2 pt6'>
-          <h3 class='f3'>How to read this chart:</h3>
-          <p class='f6 measure-narrow 1h-copy'>
-            First, find the hero you'd like to counter along the left edge. Then, note the strength rating of each column's hero in that row.
-          </p>
-          <p class='f6 measure-narrow 1h-copy'>
-            For example, if you'd like to counter Bastion, find the 7th row, and then note that Genji has an "A" rating in the first column.
-          </p>
-        </article>
-
-        <div class='fl w-75 pa2'>
-          <table class='table table-header-rotated'>
-            <thead>
-              <tr>
-                <th></th>
-                ${heroes.map( h => html`
-                  <th class='rotate'>
-                    <div><span>${h.name}</span></div>
-                  </th>
-                ` )}
-              </tr>
-            </thead>
-            <tbody>
-              ${heroes.map(renderRow)}
-            </tbody>
-          </table>
-        </div>
+        <table class='table table-header-rotated'>
+          <thead>
+            <tr>
+              <th></th>
+              ${heroes.map( h => html`
+                <th class='rotate'>
+                  <div><span>${h.name}</span></div>
+                </th>
+              ` )}
+            </tr>
+          </thead>
+          <tbody>
+            ${heroes.map(renderRow)}
+          </tbody>
+        </table>
       </div>
     `
   }
@@ -154,7 +150,7 @@ const mainView = module.exports = function (state, prev, send) {
   }
 
   function renderCell (asHero, agHero) {
-    var value = '?'
+    var value = ''
     var style = ''
     if (agHero.name === asHero.name) return html`<td></td>`
 
