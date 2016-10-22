@@ -6,8 +6,8 @@ const heroes = require('../data/heroes')
 module.exports = {
   fetchAll: function (data, state, send, done) {
     var combos = []
-    heroes.forEach(function (asHero) {
-      heroes.forEach(function (agHero) {
+    heroes.forEach(function (agHero) {
+      heroes.forEach(function (asHero) {
         if (asHero.name === agHero.name) return
         combos.push({asHero: asHero.name, agHero: agHero.name})
       })
