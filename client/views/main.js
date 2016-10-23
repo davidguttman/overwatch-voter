@@ -126,6 +126,10 @@ const mainView = module.exports = function (state, prev, send) {
 
         <div class='fl w-75 pa2'>
           <table class='table table-header-rotated'>
+            <caption style="
+              position: relative;
+              top: 83px;
+            " class="f5 i light-silver">Counter As...</caption>
             <thead>
               <tr>
                 <th></th>
