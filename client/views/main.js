@@ -93,6 +93,8 @@ const mainView = module.exports = function (state, prev, send) {
   }
 
   function renderTable () {
+    var term = state.searchTerm.length
+
     return html`
       <div class=''>
         <article class='fl w-25 pa2 pt6'>
@@ -109,7 +111,17 @@ const mainView = module.exports = function (state, prev, send) {
             value=${state.searchTerm}
             placeholder='Search'
             onkeyup=${search}
-            class='gray bg-dark-gray ba pa2 mt3' />
+            class='${term ? 'light-gray' : 'gray'} bg-dark-gray ba pa2 mt3' />
+
+          <span>
+            ${ !term ? '' : html`
+              <a
+                onclick=${(e) => send('setSearchTerm', '')}
+                class='f6 dim light-gray pa2'>
+                Clear
+              </a>
+            `}
+          </span>
         </article>
 
         <div class='fl w-75 pa2'>
@@ -136,10 +148,15 @@ const mainView = module.exports = function (state, prev, send) {
   function renderRow (agHero) {
     return html`
       <tr>
-        <th class='row-header'>${agHero.name}</th>
-          ${state.sortedCounterHeroes.map( (asHero, j) => {
-            return renderCell(asHero, agHero)
-          } )}
+        <th
+          onclick=${(e) => send('setSearchTerm', agHero.name)}
+          class='row-header pointer dim'>
+          ${agHero.name}
+        </th>
+
+        ${state.sortedCounterHeroes.map( (asHero, j) => {
+          return renderCell(asHero, agHero)
+        } )}
       </tr>
     `
   }

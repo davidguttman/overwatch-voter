@@ -94,6 +94,8 @@ const mainView = module.exports = function (state, prev, send) {
   }
 
   function renderTable () {
+    var term = state.searchTerm
+    
     return html`
       <div class=''>
         <article class='fl w-25 pa2 pt6'>
@@ -110,7 +112,17 @@ const mainView = module.exports = function (state, prev, send) {
             value=${state.searchTerm}
             placeholder='Search'
             onkeyup=${search}
-            class='gray bg-dark-gray ba pa2 mt3' />
+            class='${term ? 'light-gray' : 'gray'} bg-dark-gray ba pa2 mt3' />
+
+          <span>
+            ${ !term ? '' : html`
+              <a
+                onclick=${(e) => send('setSearchTerm', '')}
+                class='f6 dim light-gray pa2'>
+                Clear
+              </a>
+            `}
+          </span>
         </article>
 
         <div class='fl w-75 pa2'>
@@ -137,10 +149,14 @@ const mainView = module.exports = function (state, prev, send) {
   function renderRow (map) {
     return html`
       <tr>
-        <th class='row-header'>${map.name}</th>
-          ${state.sortedMapHeroes.map( (asHero, j) => {
-            return renderCell(asHero, map)
-          } )}
+        <th
+          onclick=${(e) => send('setSearchTerm', map.name)}
+          class='row-header pointer dim'>
+          ${map.name}
+        </th>
+        ${state.sortedMapHeroes.map( (asHero, j) => {
+          return renderCell(asHero, map)
+        } )}
       </tr>
     `
   }
