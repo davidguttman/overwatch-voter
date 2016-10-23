@@ -5,7 +5,8 @@ const state = {
   editTarget: null,
   heroCounters: {},
   heroMaps: {},
-  loading: true
+  loading: true,
+  searchTerm: ''
 }
 
 module.exports = {

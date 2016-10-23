@@ -20,6 +20,7 @@
     "cssify": "^1.0.3",
     "es2020": "^1.1.9",
     "firebase": "^3.5.0",
+    "fuzzysearch": "^1.0.3",
     "lodash": "^4.16.4",
     "normalize.css": "^5.0.0",
     "observ-varhash": "^1.0.8",

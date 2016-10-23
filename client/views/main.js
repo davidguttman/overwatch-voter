@@ -1,5 +1,6 @@
 const get = require('lodash/get')
 const html = require('choo/html')
+const fSearch = require('../fuzzysearch')
 
 const heroes = require('../data/heroes')
 const renderHeader = require('./header')
@@ -102,6 +103,12 @@ const mainView = module.exports = function (state, prev, send) {
           <p class='f6 measure-narrow 1h-copy'>
             For example, if you'd like to counter Bastion, find the 7th row, and then note that Genji has an "A" rating in the first column.
           </p>
+
+          <input
+            type='text'
+            placeholder='Search'
+            onkeyup=${search}
+            class='gray bg-dark-gray ba pa2 mt3' />
         </article>
 
         <div class='fl w-75 pa2'>
@@ -117,7 +124,11 @@ const mainView = module.exports = function (state, prev, send) {
               </tr>
             </thead>
             <tbody>
-              ${heroes.map(renderRow)}
+              ${
+                heroes.filter((h) => {
+                  return fSearch(state.searchTerm, h.name)
+                }).map(renderRow)
+              }
             </tbody>
           </table>
         </div>
@@ -171,5 +182,9 @@ const mainView = module.exports = function (state, prev, send) {
         ${value}
       </td>
     `
+  }
+
+  function search (evt) {
+    send('setSearchTerm', evt.target.value)
   }
 }

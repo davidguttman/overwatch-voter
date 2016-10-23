@@ -40,5 +40,10 @@ module.exports = {
   cancelEditCombo: function (combo, state) {
     state.editTarget = null
     return state
+  },
+
+  setSearchTerm: function (term, state) {
+    state.searchTerm = term
+    return state
   }
 }
