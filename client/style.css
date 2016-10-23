@@ -50,10 +50,16 @@ a.selected {
   opacity: 0.5;
 }
 
+.promo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 .spinner {
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 20px;
 
   width: 40px;
   height: 40px;
