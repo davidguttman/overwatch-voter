@@ -6,7 +6,7 @@ module.exports = function () {
       <div class='promo gray i'>
         Pssst... if you'd like to learn how to build apps like this, check out my
         <a
-          class='gray dim'
+          class='light-silver dim'
           onclick=${bookClick}>
           book on React</a>.
       </div>
