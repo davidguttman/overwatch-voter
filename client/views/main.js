@@ -106,6 +106,7 @@ const mainView = module.exports = function (state, prev, send) {
 
           <input
             type='text'
+            value=${state.searchTerm}
             placeholder='Search'
             onkeyup=${search}
             class='gray bg-dark-gray ba pa2 mt3' />
@@ -116,7 +117,7 @@ const mainView = module.exports = function (state, prev, send) {
             <thead>
               <tr>
                 <th></th>
-                ${heroes.map( h => html`
+                ${state.sortedCounterHeroes.map( h => html`
                   <th class='rotate'>
                     <div><span>${h.name}</span></div>
                   </th>
@@ -124,11 +125,7 @@ const mainView = module.exports = function (state, prev, send) {
               </tr>
             </thead>
             <tbody>
-              ${
-                heroes.filter((h) => {
-                  return fSearch(state.searchTerm, h.name)
-                }).map(renderRow)
-              }
+              ${ state.filteredHeroes.map(renderRow) }
             </tbody>
           </table>
         </div>
@@ -140,7 +137,7 @@ const mainView = module.exports = function (state, prev, send) {
     return html`
       <tr>
         <th class='row-header'>${agHero.name}</th>
-          ${heroes.map( (asHero, j) => {
+          ${state.sortedCounterHeroes.map( (asHero, j) => {
             return renderCell(asHero, agHero)
           } )}
       </tr>
