@@ -13,12 +13,12 @@ module.exports = function () {
         </h1>
         <nav class="mw7 mt2">
           <a
-            class="f6 f5-l link white-80 dib pr3 dim"
+            class="f6 f5-l link white-80 dib pr3 dim ${on('/counters')}"
             href="/counters" >
             Counterpicks
           </a>
           <a
-            class="f6 f5-l link white-80 dib pr3 dim"
+            class="f6 f5-l link white-80 dib pr3 dim ${on('/maps')}"
             href="/maps" >
             Maps
           </a>
@@ -27,4 +27,8 @@ module.exports = function () {
 
     </div>
   `
+}
+
+function on (path) {
+  return window.location.pathname === path ? 'selected' : ''
 }

@@ -12,10 +12,18 @@ const app = choo()
 app.model(require('./model'))
 
 app.router((route) => [
-  route('/', require('./views/main')),
+  route('/', redirect('/counters')),
   route('/counters', require('./views/main')),
   route('/maps', require('./views/maps')),
 ])
 
 const tree = app.start()
 document.body.appendChild(tree)
+
+function redirect (path) {
+  return function (state, prev, send) {
+    history.pushState({}, '', path)
+    send('location:setLocation', { location: path })
+    return document.createElement('div')
+  }
+}
