@@ -97,7 +97,7 @@ const mainView = module.exports = function (state, prev, send) {
 
     return html`
       <div class=''>
-        <article class='fl w-25 pa2 pt6'>
+        <article class='fl w-25 pa2 pt6 light-gray'>
           <h3 class='f3'>How to read this chart:</h3>
           <p class='f6 measure-narrow 1h-copy'>
             First, find the hero you'd like to counter along the left edge. Then, note the strength rating of each column's hero in that row.
