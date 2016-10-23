@@ -1,8 +1,8 @@
 .table-header-rotated {
   border-collapse: collapse;
   font-size: 50%;
-  position: relative;
-  top: -50px;
+  /*position: relative;
+  top: -50px;*/
 }
 .table-header-rotated td {
   width: 20px;
@@ -39,6 +39,11 @@
 
 a {
   cursor: pointer;
+  outline: 0;
+}
+
+a.link, a.link:focus, a.link:active {
+  outline: 0;
 }
 
 

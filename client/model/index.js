@@ -4,6 +4,7 @@ const reducers = require('./reducers')
 const state = {
   editTarget: null,
   heroCounters: {},
+  heroMaps: {},
   loading: true
 }
 

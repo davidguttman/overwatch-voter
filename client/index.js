@@ -13,6 +13,7 @@ app.model(require('./model'))
 
 app.router((route) => [
   route('/', require('./views/main')),
+  route('/counters', require('./views/main')),
   route('/maps', require('./views/maps')),
 ])
 

@@ -1,6 +1,6 @@
 var set = require('lodash/set')
 module.exports = {
-  setRatings: (ratingList, state) => {
+  setCounterRatings: (ratingList, state) => {
     var heroCounters = {}
     ratingList.forEach(function (combo) {
       set(heroCounters, [combo.asHero, combo.againstHero], combo)
@@ -10,9 +10,25 @@ module.exports = {
     return state
   },
 
-  setRating: (rating, state) => {
+  setCounterRating: (rating, state) => {
     var path = [rating.asHero, rating.againstHero, 'rating']
     set(state.heroCounters, path, rating.rating)
+    return state
+  },
+
+  setMapRatings: (ratingList, state) => {
+    var heroMaps = {}
+    ratingList.forEach(function (combo) {
+      set(heroMaps, [combo.asHero, combo.map], combo)
+    })
+    state.heroMaps = heroMaps
+    state.loading = false
+    return state
+  },
+
+  setMapRating: (rating, state) => {
+    var path = [rating.asHero, rating.map, 'rating']
+    set(state.heroMaps, path, rating.rating)
     return state
   },
 

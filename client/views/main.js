@@ -1,14 +1,14 @@
 const get = require('lodash/get')
 const html = require('choo/html')
 
-const maps = require('../data/maps')
 const heroes = require('../data/heroes')
+const renderHeader = require('./header')
 
 var fetched = false
 const mainView = module.exports = function (state, prev, send) {
   if (!fetched) {
     fetched = true
-    send('fetchAll')
+    send('fetchAllCounters')
   }
 
   return render()
@@ -33,30 +33,13 @@ const mainView = module.exports = function (state, prev, send) {
 
   function renderLoading () { return html`<div class='spinner'></div>` }
 
-  function renderHeader () {
-    return html`
-      <div>
-        <div class='fl w-25 pa2'></div>
-        <div class="fl w-75 pa2">
-          <p class="f6">
-            Overwatch Counters Guide
-          </p>
-          <h1 class="f2 f1-l lh-title mt0 mb3">
-            Choose the right hero for the job.
-          </h1>
-        </div>
-
-      </div>
-    `
-  }
-
   function renderEdit () {
     var asHero = state.editTarget.asHero
     var againstHero = state.editTarget.againstHero
     var letterStyle = "f1 link grow b no-underline dib ph2 pv1"
 
     function rate (rating) {
-      send('rateCombo', {
+      send('rateCounterCombo', {
         asHero: asHero,
         againstHero: againstHero,
         rating: rating

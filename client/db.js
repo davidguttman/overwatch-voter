@@ -25,8 +25,10 @@ var ratingCounts = varhash({})
 
 var db = module.exports = {
   getTotalCounts: getTotalCounts,
-  setRating: loginify(setRating),
-  getRating: getRating
+  setCounterRating: loginify(setCounterRating),
+  setMapRating: loginify(setMapRating),
+  getCounterRating: getCounterRating,
+  getMapRating: getMapRating
 }
 
 function createKey (asHero, againstHero) {
@@ -58,7 +60,7 @@ function getTotalCounts (cb) {
   })
 }
 
-function setRating (asHero, againstHero, rating, cb) {
+function setCounterRating (asHero, againstHero, rating, cb) {
   if (!rating) return
 
   var pairKey = createKey(
@@ -77,11 +79,64 @@ function setRating (asHero, againstHero, rating, cb) {
     .then(function () { cb() })
 }
 
-function getRating (asHero, againstHero, cb) {
+function setMapRating (asHero, map, rating, cb) {
+  if (!rating) return
+
+  var pairKey = createKey(
+    asHero.replace(/\./g, ''),
+    map.replace(/\./g, '')
+  )
+
+  localStorage.setItem(pairKey, rating)
+  var ratingKey = ['heroMaps', pairKey, uid].join('/')
+  ref
+    .database()
+    .ref()
+    .child(ratingKey)
+    .setWithPriority(rating, rating)
+    .catch(cb)
+    .then(function () { cb() })
+}
+
+function getCounterRating (asHero, againstHero, cb) {
   var pairKey = createKey(asHero, againstHero)
   var local = localStorage.getItem(pairKey)
 
   var childKey = ['heroCounters', pairKey].join('/')
+  query(ref, childKey, function(err, snap) {
+    if (err) return cb(err)
+
+    var n = snap.numChildren()
+    if (local) return cb(null, {
+      rating: parseFloat(local),
+      nVotes: n
+    })
+
+    if (n === 0) return cb(null)
+
+    ratingCounts.put(pairKey, n)
+
+    var i = 0
+    var mid = Math.floor(n/2)
+    snap.forEach(function(cSnap) {
+      if (i === mid) {
+        cb(null, {
+          rating: cSnap.val(),
+          nVotes: n
+        })
+
+        return true
+      }
+      i += 1
+    })
+  })
+}
+
+function getMapRating (asHero, map, cb) {
+  var pairKey = createKey(asHero, map)
+  var local = localStorage.getItem(pairKey)
+
+  var childKey = ['heroMaps', pairKey].join('/')
   query(ref, childKey, function(err, snap) {
     if (err) return cb(err)
 
