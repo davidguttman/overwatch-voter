@@ -118,7 +118,7 @@ const mainView = module.exports = function (state, prev, send) {
             ${ !term ? '' : html`
               <a
                 onclick=${(e) => send('setSearchTerm', '')}
-                class='f6 dim light-gray pa2'>
+                class='f5 dim white underline pa2'>
                 Clear
               </a>
             `}
