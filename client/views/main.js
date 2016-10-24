@@ -153,7 +153,13 @@ const mainView = module.exports = function (state, prev, send) {
     return html`
       <tr>
         <th
-          onclick=${(e) => send('setSearchTerm', agHero.name)}
+          onclick=${(e) => {
+            if (agHero.name === state.searchTerm) {
+              send('setSearchTerm', '')
+            } else {
+              send('setSearchTerm', agHero.name)
+            }
+          }}
           class='row-header pointer dim'>
           ${agHero.name}
         </th>

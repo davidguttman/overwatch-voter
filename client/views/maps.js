@@ -95,7 +95,7 @@ const mainView = module.exports = function (state, prev, send) {
 
   function renderTable () {
     var term = state.searchTerm
-    
+
     return html`
       <div class=''>
         <article class='fl w-25 pa2 pt6 light-gray'>
@@ -150,7 +150,13 @@ const mainView = module.exports = function (state, prev, send) {
     return html`
       <tr>
         <th
-          onclick=${(e) => send('setSearchTerm', map.name)}
+          onclick=${(e) => {
+            if (map.name === state.searchTerm) {
+              send('setSearchTerm', '')
+            } else {
+              send('setSearchTerm', map.name)
+            }
+          }}
           class='row-header pointer dim'>
           ${map.name}
         </th>
