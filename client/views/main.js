@@ -4,6 +4,7 @@ const fSearch = require('../fuzzysearch')
 
 const heroes = require('../data/heroes')
 const renderHeader = require('./header')
+const renderDistTable = require('./dist-table')
 
 var fetched = false
 const mainView = module.exports = function (state, prev, send) {
@@ -116,6 +117,8 @@ const mainView = module.exports = function (state, prev, send) {
               </a>
             `}
           </span>
+
+          ${ renderHighlight() }
         </article>
 
         <div class='fl w-75 pa2'>
@@ -194,11 +197,33 @@ const mainView = module.exports = function (state, prev, send) {
     return html`
       <td
         onclick=${(e) => send('startEditCombo', combo)}
+        onmouseover=${(e) => send('setHighlight', rating)}
         style='cursor: pointer'
         title='${asHero.name} countering ${agHero.name} (${nVotes} votes)'
         class=${'dim ' + style} >
         ${value}
       </td>
+    `
+  }
+
+  function renderHighlight () {
+    var highlight = state.highlight
+    var asHero = get(highlight, 'asHero')
+    if (!asHero) return ''
+
+    return html`
+      <div class='pt3 light-gray'>
+        <p class='f5'>
+          <strong>${highlight.asHero}</strong>
+          <span class='light-silver'>counters</span>
+          <br />
+          ${highlight.againstHero}
+        </p>
+
+        ${renderDistTable(highlight)}
+
+        <p class='f6'>${highlight.count} ratings</p>
+      </div>
     `
   }
 

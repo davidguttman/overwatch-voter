@@ -99,45 +99,19 @@ function setMapRating (asHero, map, rating, cb) {
 }
 
 function getCounterRating (asHero, againstHero, cb) {
-  var pairKey = createKey(asHero, againstHero)
-  var local = localStorage.getItem(pairKey)
-
-  var childKey = ['heroCounters', pairKey].join('/')
-  query(ref, childKey, function(err, snap) {
-    if (err) return cb(err)
-
-    var n = snap.numChildren()
-    if (local) return cb(null, {
-      rating: parseFloat(local),
-      nVotes: n
-    })
-
-    if (n === 0) return cb(null)
-
-    ratingCounts.put(pairKey, n)
-
-    var i = 0
-    var mid = Math.floor(n/2)
-    snap.forEach(function(cSnap) {
-      if (i === mid) {
-        cb(null, {
-          rating: cSnap.val(),
-          nVotes: n
-        })
-
-        return true
-      }
-      i += 1
-    })
-  })
+  getRating('heroCounters', asHero, againstHero, cb)
 }
 
 function getMapRating (asHero, map, cb) {
-  var pairKey = createKey(asHero, map)
+  getRating('heroMaps', asHero, map, cb)
+}
+
+function getRating (type, a, b, cb) {
+  var pairKey = createKey(a, b)
   var localStr = localStorage.getItem(pairKey)
   var local = localStr ? parseFloat(localStr) : null
 
-  var childKey = ['heroMaps', pairKey].join('/')
+  var childKey = [type, pairKey].join('/')
   query(ref, childKey, function(err, snap) {
     if (err) return cb(err)
 
@@ -146,13 +120,7 @@ function getMapRating (asHero, map, cb) {
       localRating: local,
       rating: local,
       nVotes: n,
-      dist: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0
-      }
+      dist: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
     }
 
     if (n === 0) return cb(null, result)
