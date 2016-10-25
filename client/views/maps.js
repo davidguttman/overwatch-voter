@@ -20,15 +20,9 @@ const mainView = module.exports = function (state, prev, send) {
       <main class="cf pa3 pa4-m pa5-l mw9 center">
         ${ state.loading ? renderLoading() : '' }
 
-        ${ state.editTarget
-          ? renderEdit()
-          : html`
-            <div>
-              ${ renderHeader() }
-              ${ renderTable() }
-            </div>
-          `
-        }
+        ${ state.editTarget ? renderEdit() : '' }
+        ${ renderHeader() }
+        ${ renderTable() }
       </main>
     `
   }
@@ -49,7 +43,7 @@ const mainView = module.exports = function (state, prev, send) {
     }
 
     return html`
-      <div class='tc'>
+      <div class='tc modal bg-dark-gray pa5'>
         <div class='f1 center'>
           How would you rate <strong>${asHero}'s</strong> ability on <strong>${map}</strong>?
         </div>
