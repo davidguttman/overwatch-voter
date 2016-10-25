@@ -80,6 +80,8 @@ function getCounterCombo (combo, cb) {
       asHero: asHero,
       againstHero: agHero,
       rating: (rating || {}).rating,
+      localRating: (rating || {}).localRating,
+      dist: (rating || {}).dist,
       count: (rating || {}).nVotes
     })
   })
@@ -96,6 +98,8 @@ function getMapCombo (combo, cb) {
       asHero: asHero,
       map: map,
       rating: (rating || {}).rating,
+      localRating: (rating || {}).localRating,
+      dist: (rating || {}).dist,
       count: (rating || {}).nVotes
     })
   })

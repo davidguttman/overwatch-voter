@@ -69,5 +69,10 @@ module.exports = {
     } else { state.sortedCounterHeroes = state.allHeroes }
 
     return state
+  },
+
+  setHighlight: function (combo, state) {
+    state.highlight = combo
+    return state
   }
 }

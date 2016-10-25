@@ -117,6 +117,8 @@ const mainView = module.exports = function (state, prev, send) {
               </a>
             `}
           </span>
+
+          ${ renderHighlight() }
         </article>
 
         <div class='fl w-75 pa2'>
@@ -172,9 +174,12 @@ const mainView = module.exports = function (state, prev, send) {
     }
 
     var rating = get(state.heroMaps, [asHero.name, map.name])
+    var displayRating
 
     if (rating) {
-      value = {5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F', undefined: '?'}[rating.rating]
+      displayRating = rating.localRating || rating.rating
+
+      value = {5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F', undefined: '?'}[displayRating]
       style = {
         5: 'white rank-a',
         4: 'light-gray rank-b',
@@ -182,7 +187,7 @@ const mainView = module.exports = function (state, prev, send) {
         2: 'light-gray rank-d',
         1: 'white rank-f',
         undefined: 'light-silver rank-c',
-      }[rating.rating]
+      }[displayRating]
     }
 
     var nVotes = (rating || {}).count || 0
@@ -190,15 +195,71 @@ const mainView = module.exports = function (state, prev, send) {
     return html`
       <td
         onclick=${(e) => send('startEditCombo', combo)}
+        onmouseover=${(e) => send('setHighlight', rating)}
         style='cursor: pointer'
-        title='${asHero.name} on ${map.name} (${nVotes} votes)'
+        title='${asHero.name} on ${map.name} (${nVotes} ratings)'
         class=${'dim ' + style} >
         ${value}
       </td>
     `
   }
 
+  function renderHighlight () {
+    var highlight = state.highlight
+    var asHero = get(highlight, 'asHero')
+    if (!asHero) return ''
+
+    return html`
+      <div class='pt3 light-gray'>
+        <p class='f5'>
+          <strong>${highlight.asHero}</strong>
+          <span class='light-silver'>on</span>
+          <br />
+          ${highlight.map}
+        </p>
+
+        ${renderDistTable(highlight)}
+
+        <p class='f6'>${highlight.count} ratings</p>
+      </div>
+    `
+  }
+
+  function renderDistTable (highlight) {
+    return html`
+      <table style='width: 100%'>
+        ${ [5, 4, 3, 2, 1].map(function (score) {
+          var scoreVotes = highlight.dist[score]
+          var grade = scoreToGrade(score)
+          var pct = 100 * scoreVotes / highlight.count
+          var isLocalScore = score === highlight.localRating
+          var color = isLocalScore ? 'white' : 'light-silver'
+
+          return html`
+            <tr>
+              <td class='pr1 ${color}'>
+                ${grade}
+              </td>
+              <td style='width: 100%'>
+                <div
+                  class='bg-${color}'
+                  style='height: 10px; width: ${pct}%'>
+                </div>
+              </td>
+            </tr>
+          `
+
+        }) }
+
+      </table>
+    `
+  }
+
   function search (evt) {
     send('setSearchTerm', evt.target.value)
   }
+}
+
+function scoreToGrade (score) {
+  return { 5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F' }[score]
 }
