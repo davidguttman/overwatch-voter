@@ -7,10 +7,10 @@ const heroes = require('../data/heroes')
 module.exports = {
   fetchAllCounters: function (data, state, send, done) {
     var combos = []
-    heroes.forEach(function (agHero) {
-      heroes.forEach(function (asHero) {
-        if (asHero.name === agHero.name) return
-        combos.push({asHero: asHero.name, agHero: agHero.name})
+    heroes.forEach(function (target) {
+      heroes.forEach(function (agent) {
+        if (agent.name === target.name) return
+        combos.push({agent: agent.name, target: target.name})
       })
     })
 
@@ -53,7 +53,7 @@ module.exports = {
   rateCounterCombo: function (data, state, send, done) {
     send('setCounterRating', data, function () { })
 
-    db.setCounterRating(data.asHero, data.againstHero, data.rating, function (err) {
+    db.setCounterRating(data.agent, data.target, data.rating, function (err) {
       if (err) return done(err)
       send('cancelEditCombo', null, done)
     })
@@ -70,15 +70,15 @@ module.exports = {
 }
 
 function getCounterCombo (combo, cb) {
-  var asHero = combo.asHero
-  var agHero = combo.agHero
+  var agent = combo.agent
+  var target = combo.target
 
-  db.getCounterRating(asHero, agHero, function (err, rating) {
+  db.getCounterRating(agent, target, function (err, rating) {
     if (err) return cb(err)
 
     cb(null, {
-      asHero: asHero,
-      againstHero: agHero,
+      agent: agent,
+      target: target,
       rating: (rating || {}).rating,
       localRating: (rating || {}).localRating,
       dist: (rating || {}).dist,

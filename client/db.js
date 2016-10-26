@@ -31,8 +31,8 @@ module.exports = {
   getMapRating: getMapRating
 }
 
-function createKey (asHero, againstHero) {
-  return [asHero, againstHero].join('!')
+function createKey (agent, target) {
+  return [agent, target].join('!')
 }
 
 function query (ref, _key, cb) {
@@ -60,12 +60,12 @@ function getTotalCounts (cb) {
   })
 }
 
-function setCounterRating (asHero, againstHero, rating, cb) {
+function setCounterRating (agent, target, rating, cb) {
   if (!rating) return
 
   var pairKey = createKey(
-    asHero.replace(/\./g, ''),
-    againstHero.replace(/\./g, '')
+    agent.replace(/\./g, ''),
+    target.replace(/\./g, '')
   )
 
   window.localStorage.setItem(pairKey, rating)
@@ -79,12 +79,12 @@ function setCounterRating (asHero, againstHero, rating, cb) {
     .then(function () { cb() })
 }
 
-function setMapRating (asHero, map, rating, cb) {
+function setMapRating (agent, target, rating, cb) {
   if (!rating) return
 
   var pairKey = createKey(
-    asHero.replace(/\./g, ''),
-    map.replace(/\./g, '')
+    agent.replace(/\./g, ''),
+    target.replace(/\./g, '')
   )
 
   window.localStorage.setItem(pairKey, rating)
@@ -98,16 +98,16 @@ function setMapRating (asHero, map, rating, cb) {
     .then(function () { cb() })
 }
 
-function getCounterRating (asHero, againstHero, cb) {
-  getRating('heroCounters', asHero, againstHero, cb)
+function getCounterRating (agent, target, cb) {
+  getRating('heroCounters', agent, target, cb)
 }
 
-function getMapRating (asHero, map, cb) {
-  getRating('heroMaps', asHero, map, cb)
+function getMapRating (agent, target, cb) {
+  getRating('heroMaps', agent, target, cb)
 }
 
-function getRating (type, a, b, cb) {
-  var pairKey = createKey(a, b)
+function getRating (type, agent, target, cb) {
+  var pairKey = createKey(agent, target)
   var localStr = window.localStorage.getItem(pairKey)
   var local = localStr ? parseFloat(localStr) : null
 

@@ -7,7 +7,7 @@ module.exports = {
   setCounterRatings: (ratingList, state) => {
     var heroCounters = {}
     ratingList.forEach(function (combo) {
-      set(heroCounters, [combo.asHero, combo.againstHero], combo)
+      set(heroCounters, [combo.agent, combo.target], combo)
     })
     state.heroCounters = heroCounters
     state.loading = false
@@ -15,7 +15,7 @@ module.exports = {
   },
 
   setCounterRating: (rating, state) => {
-    var path = [rating.asHero, rating.againstHero, 'rating']
+    var path = [rating.agent, rating.target, 'rating']
     set(state.heroCounters, path, rating.rating)
     return state
   },
@@ -53,17 +53,17 @@ module.exports = {
     state.filteredMaps = state.allMaps.filter((m) => fSearch(term, m.name))
 
     if (state.filteredMaps.length === 1) {
-      state.sortedMapHeroes = sortBy(state.allHeroes, function (asHero) {
+      state.sortedMapHeroes = sortBy(state.allHeroes, function (agent) {
         var map = state.filteredMaps[0]
-        var r = get(state.heroMaps, [asHero.name, map.name, 'rating'])
+        var r = get(state.heroMaps, [agent.name, map.name, 'rating'])
         return -1 * (r || 3)
       })
     } else { state.sortedMapHeroes = state.allHeroes }
 
     if (state.filteredHeroes.length === 1) {
-      state.sortedCounterHeroes = sortBy(state.allHeroes, function (asHero) {
+      state.sortedCounterHeroes = sortBy(state.allHeroes, function (agent) {
         var agHero = state.filteredHeroes[0]
-        var r = get(state.heroCounters, [asHero.name, agHero.name, 'rating'])
+        var r = get(state.heroCounters, [agent.name, agHero.name, 'rating'])
         return -1 * (r || 3)
       })
     } else { state.sortedCounterHeroes = state.allHeroes }
