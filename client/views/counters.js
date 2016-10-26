@@ -38,7 +38,7 @@ module.exports = function (state, prev, send) {
           <div class='fl w-25 pa2 pt6 light-gray'>
             ${renderInstructions(instructions())}
             ${renderSearch(state.searchTerm, search)}
-            ${renderDistribution(state.highlight)}
+            ${renderDistribution(state.highlight, 'counters')}
           </div>
 
           <div class='fl w-75 pa2'>
@@ -59,7 +59,7 @@ function edit (state, send) {
   var agent = state.editTarget.agent
   var target = state.editTarget.target
 
-  return renderEdit(agent, target, 'on', function (rating) {
+  return renderEdit(agent, target, 'to counter', function (rating) {
     if (!rating) return send('cancelEditCombo')
 
     send('rateCounterCombo', {

@@ -38,7 +38,7 @@ module.exports = function (state, prev, send) {
           <div class='fl w-25 pa2 pt6 light-gray'>
             ${renderInstructions(instructions())}
             ${renderSearch(state.searchTerm, search)}
-            ${renderDistribution(state.highlight)}
+            ${renderDistribution(state.highlight, 'on')}
           </div>
 
           <div class='fl w-75 pa2'>
