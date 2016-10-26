@@ -57,7 +57,10 @@ module.exports = function (opts, state, send) {
       displayRating = combo.localRating || combo.rating
 
       value = {5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F', undefined: '?', null: '?'}[displayRating]
-      style = {
+
+      if (combo.localRating) style += ' underline '
+
+      style += {
         5: 'white rank-a',
         4: 'light-gray rank-b',
         3: 'light-silver rank-c',
