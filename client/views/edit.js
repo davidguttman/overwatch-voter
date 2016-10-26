@@ -1,59 +1,45 @@
 const html = require('choo/html')
 
-module.exports = function (state, prev, send) {
-  var asHero = state.editTarget.asHero
-  var map = state.editTarget.map
-  var letterStyle = "f1 link grow b no-underline dib ph2 pv1"
-
-  function rate (rating) {
-    send('rateMapCombo', {
-      asHero: asHero,
-      map: map,
-      rating: rating
-    })
-  }
+module.exports = function (agent, object, modifier, cb) {
+  const gradeButtons = [
+    {letter: 'A', color: 'green'},
+    {letter: 'B', color: 'dark-green'},
+    {letter: 'C', color: 'gray'},
+    {letter: 'D', color: 'dark-red'},
+    {letter: 'F', color: 'red'}
+  ]
 
   return html`
     <div class='tc modal bg-dark-gray pa5'>
       <div class='f1 center'>
-        How would you rate <strong>${asHero}'s</strong> ability on <strong>${map}</strong>?
+        How would you rate <strong>${agent}'s</strong> ability ${modifier} <strong>${object}</strong>?
       </div>
 
       <section class="pa3 pa4-m pa5-l center">
-        <a
-          onclick=${(e) => rate(5)}
-          class=${'hover-green ' + letterStyle} >
-          A
-        </a>
-        <a
-          onclick=${(e) => rate(4)}
-          class=${'hover-dark-green ' + letterStyle} >
-          B
-        </a>
-        <a
-          onclick=${(e) => rate(3)}
-          class=${'hover-gray ' + letterStyle} >
-          C
-        </a>
-        <a
-          onclick=${(e) => rate(2)}
-          class=${'hover-dark-red ' + letterStyle} >
-          D
-        </a>
-        <a
-          onclick=${(e) => rate(1)}
-          class=${'hover-red ' + letterStyle} >
-          F
-        </a>
+        ${gradeButtons.map((gb, i) => html`
+          <a
+            onclick=${(e) => rate(5 - i)}
+            class='hover-${gb.color} f1 link grow b no-underline dib ph2 pv1'>
+            ${gb.letter}
+          </a>
+        `)}
       </section>
 
       <section class="pa3 pa4-m pa5-l center">
         <a
-          onclick=${(e) => send('cancelEditCombo')}
+          onclick=${(e) => cb()}
           class="f3 gray dim">
           Cancel
         </a>
       </section>
     </div>
   `
+
+  function rate (rating) {
+    cb({
+      agent: agent,
+      object: object,
+      rating: rating
+    })
+  }
 }
