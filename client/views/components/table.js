@@ -56,7 +56,7 @@ module.exports = function (opts, state, send) {
     if (combo) {
       displayRating = combo.localRating || combo.rating
 
-      value = {5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F', undefined: '?'}[displayRating]
+      value = {5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F', undefined: '?', null: '?'}[displayRating]
       style = {
         5: 'white rank-a',
         4: 'light-gray rank-b',
@@ -67,14 +67,11 @@ module.exports = function (opts, state, send) {
       }[displayRating]
     }
 
-    var nVotes = (combo || {}).count || 0
-
     return html`
       <td
         onclick=${(e) => onRate(combo)}
         onmouseover=${(e) => onHighlight(combo)}
         style='cursor: pointer'
-        title='${agent.name} on ${target.name} (${nVotes} ratings)'
         class=${'dim ' + style} >
         ${value}
       </td>

@@ -15,6 +15,7 @@ app.router((route) => [
   route('/', redirect('/counters')),
   route('/counters', require('./views/counters')),
   route('/maps', require('./views/maps')),
+  route('/synergy', require('./views/synergy')),
 ])
 
 const tree = app.start()

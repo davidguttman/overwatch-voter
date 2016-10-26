@@ -20,6 +20,22 @@ module.exports = {
     return state
   },
 
+  setSynergyRatings: (ratingList, state) => {
+    var heroSynergy = {}
+    ratingList.forEach(function (combo) {
+      set(heroSynergy, [combo.agent, combo.target], combo)
+    })
+    state.heroSynergy = heroSynergy
+    state.loading = false
+    return state
+  },
+
+  setSynergyRating: (rating, state) => {
+    var path = [rating.agent, rating.target, 'rating']
+    set(state.heroSynergy, path, rating.rating)
+    return state
+  },
+
   setMapRatings: (ratingList, state) => {
     var heroMaps = {}
     ratingList.forEach(function (combo) {
@@ -54,19 +70,28 @@ module.exports = {
 
     if (state.filteredMaps.length === 1) {
       state.sortedMapHeroes = sortBy(state.allHeroes, function (agent) {
-        var map = state.filteredMaps[0]
-        var r = get(state.heroMaps, [agent.name, map.name, 'rating'])
+        var target = state.filteredMaps[0]
+        var r = get(state.heroMaps, [agent.name, target.name, 'rating'])
         return -1 * (r || 3)
       })
     } else { state.sortedMapHeroes = state.allHeroes }
 
     if (state.filteredHeroes.length === 1) {
       state.sortedCounterHeroes = sortBy(state.allHeroes, function (agent) {
-        var agHero = state.filteredHeroes[0]
-        var r = get(state.heroCounters, [agent.name, agHero.name, 'rating'])
+        var target = state.filteredHeroes[0]
+        var r = get(state.heroCounters, [agent.name, target.name, 'rating'])
         return -1 * (r || 3)
       })
-    } else { state.sortedCounterHeroes = state.allHeroes }
+
+      state.sortedSynergyHeroes = sortBy(state.allHeroes, function (agent) {
+        var target = state.filteredHeroes[0]
+        var r = get(state.heroSynergy, [agent.name, target.name, 'rating'])
+        return -1 * (r || 3)
+      })
+    } else {
+      state.sortedCounterHeroes = state.allHeroes
+      state.sortedSynergyHeroes = state.allHeroes
+    }
 
     return state
   },

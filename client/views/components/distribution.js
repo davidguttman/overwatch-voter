@@ -14,12 +14,16 @@ module.exports = function (combo, modifier) {
 
       ${renderDistTable(combo)}
 
-      <p class='f6'>${combo.count} ratings</p>
+      <p class='f6'>
+        ${combo.count} rating${combo.count === 1 ? '' : 's'}
+      </p>
     </div>
   `
 }
 
 function renderDistTable (combo) {
+  if (!combo.count) return ''
+
   return html`
     <table style='width: 100%'>
       ${[5, 4, 3, 2, 1].map(function (score) {

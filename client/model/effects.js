@@ -28,6 +28,29 @@ module.exports = {
     }
   },
 
+  fetchAllSynergy: function (data, state, send, done) {
+    var combos = []
+    heroes.forEach(function (target) {
+      heroes.forEach(function (agent) {
+        if (agent.name === target.name) return
+        combos.push({agent: agent.name, target: target.name})
+      })
+    })
+
+    mapLimit(combos, 64, spy, function (err, results) {
+      if (err) return done(err)
+      send('setSynergyRatings', results, done)
+    })
+
+    function spy (combo, cb) {
+      getSynergyCombo(combo, function (err, res) {
+        if (err) return cb(err)
+        cb(null, res)
+        send('setSynergyRating', res, function () {})
+      })
+    }
+  },
+
   fetchAllMaps: function (data, state, send, done) {
     var combos = []
     maps.forEach(function (target) {
@@ -59,6 +82,15 @@ module.exports = {
     })
   },
 
+  rateSynergyCombo: function (data, state, send, done) {
+    send('setSynergyRating', data, function () { })
+
+    db.setSynergyRating(data.agent, data.target, data.rating, function (err) {
+      if (err) return done(err)
+      send('cancelEditCombo', null, done)
+    })
+  },
+
   rateMapCombo: function (data, state, send, done) {
     send('setMapRating', data, function () { })
 
@@ -74,6 +106,24 @@ function getCounterCombo (combo, cb) {
   var target = combo.target
 
   db.getCounterRating(agent, target, function (err, rating) {
+    if (err) return cb(err)
+
+    cb(null, {
+      agent: agent,
+      target: target,
+      rating: (rating || {}).rating,
+      localRating: (rating || {}).localRating,
+      dist: (rating || {}).dist,
+      count: (rating || {}).nVotes
+    })
+  })
+}
+
+function getSynergyCombo (combo, cb) {
+  var agent = combo.agent
+  var target = combo.target
+
+  db.getSynergyRating(agent, target, function (err, rating) {
     if (err) return cb(err)
 
     cb(null, {

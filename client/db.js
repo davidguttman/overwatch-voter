@@ -26,8 +26,10 @@ var ratingCounts = varhash({})
 module.exports = {
   getTotalCounts: getTotalCounts,
   setCounterRating: loginify(setCounterRating),
+  setSynergyRating: loginify(setSynergyRating),
   setMapRating: loginify(setMapRating),
   getCounterRating: getCounterRating,
+  getSynergyRating: getSynergyRating,
   getMapRating: getMapRating
 }
 
@@ -61,41 +63,54 @@ function getTotalCounts (cb) {
 }
 
 function setCounterRating (agent, target, rating, cb) {
-  if (!rating) return
+  setRating({
+    type: 'heroCounters',
+    agent: agent,
+    target: target,
+    rating: rating
+  }, cb)
+}
 
-  var pairKey = createKey(
-    agent.replace(/\./g, ''),
-    target.replace(/\./g, '')
-  )
-
-  window.localStorage.setItem(pairKey, rating)
-  var ratingKey = ['heroCounters', pairKey, uid].join('/')
-  ref
-    .database()
-    .ref()
-    .child(ratingKey)
-    .setWithPriority(rating, rating)
-    .catch(cb)
-    .then(function () { cb() })
+function setSynergyRating (agent, target, rating, cb) {
+  setRating({
+    type: 'heroSynergy',
+    agent: agent,
+    target: target,
+    rating: rating
+  }, cb)
 }
 
 function setMapRating (agent, target, rating, cb) {
-  if (!rating) return
+  setRating({
+    type: 'heroMaps',
+    agent: agent,
+    target: target,
+    rating: rating
+  }, cb)
+}
+
+function setRating (opts, cb) {
+  if (!opts.rating) return
+
+  var type = opts.type
+  var agent = opts.agent
+  var target = opts.target
+  var rating = opts.rating
 
   var pairKey = createKey(
     agent.replace(/\./g, ''),
     target.replace(/\./g, '')
   )
 
-  window.localStorage.setItem(pairKey, rating)
-  var ratingKey = ['heroMaps', pairKey, uid].join('/')
+  setLocal(type, pairKey, rating)
+  var ratingKey = [type, pairKey, uid].join('/')
   ref
-    .database()
-    .ref()
-    .child(ratingKey)
-    .setWithPriority(rating, rating)
-    .catch(cb)
-    .then(function () { cb() })
+  .database()
+  .ref()
+  .child(ratingKey)
+  .setWithPriority(rating, rating)
+  .catch(cb)
+  .then(function () { cb() })
 }
 
 function getCounterRating (agent, target, cb) {
@@ -106,9 +121,13 @@ function getMapRating (agent, target, cb) {
   getRating('heroMaps', agent, target, cb)
 }
 
+function getSynergyRating (agent, target, cb) {
+  getRating('heroSynergy', agent, target, cb)
+}
+
 function getRating (type, agent, target, cb) {
   var pairKey = createKey(agent, target)
-  var localStr = window.localStorage.getItem(pairKey)
+  var localStr = getLocal(type, pairKey)
   var local = localStr ? parseFloat(localStr) : null
 
   var childKey = [type, pairKey].join('/')
@@ -147,4 +166,21 @@ function loginify (fn) {
       fn.apply(null, args)
     })
   }
+}
+
+function getLocalKey (type, pairKey) {
+  var localKey = pairKey
+  if (type === 'heroSynergy') localKey = [type, pairKey].join('!')
+
+  return localKey
+}
+
+function getLocal (type, pairKey) {
+  var localKey = getLocalKey(type, pairKey)
+  return window.localStorage.getItem(localKey)
+}
+
+function setLocal (type, pairKey, val) {
+  var localKey = getLocalKey(type, pairKey)
+  return window.localStorage.setItem(localKey, val)
 }

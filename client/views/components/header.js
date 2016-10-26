@@ -30,6 +30,11 @@ module.exports = function () {
             href="/maps" >
             Maps
           </a>
+          <a
+            class="f6 f5-l link white-80 dib pr3 dim ${on('/synergy')}"
+            href="/synergy" >
+            Synergy
+          </a>
         </nav>
       </div>
 

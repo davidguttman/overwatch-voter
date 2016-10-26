@@ -15,6 +15,7 @@ const state = {
   filteredHeroes: heroes,
   sortedMapHeroes: heroes,
   sortedCounterHeroes: heroes,
+  sortedSynergyHeroes: heroes,
   searchTerm: ''
 }
 
