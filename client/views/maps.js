@@ -1,4 +1,5 @@
 const html = require('choo/html')
+const xtend = require('xtend')
 
 const renderEdit = require('./edit')
 const renderTable = require('./table')
@@ -15,6 +16,21 @@ module.exports = function (state, prev, send) {
     send('fetchAllMaps')
   }
 
+  var highlight = state.highlight || {}
+  var combo = xtend(highlight, {
+    agent: highlight.agent,
+    target: highlight.target
+  })
+
+  var tableOpts = {
+    agents: state.sortedMapHeroes,
+    targets: state.filteredMaps,
+    combos: state.heroMaps,
+    onSearch: search,
+    onRate: (combo) => send('startEditCombo', combo),
+    onHighlight: (combo) => send('setHighlight', combo)
+  }
+
   return render()
 
   function render () {
@@ -28,32 +44,34 @@ module.exports = function (state, prev, send) {
         <div>
           <div class='fl w-25 pa2 pt6 light-gray'>
             ${renderInstructions(instructions())}
-            ${renderSearch(state.searchTerm, send.bind(null, 'setSearchTerm'))}
-            ${renderDistribution(state, prev, send)}
+            ${renderSearch(state.searchTerm, search)}
+            ${renderDistribution(combo)}
           </div>
 
           <div class='fl w-75 pa2'>
-            ${renderTable(state, prev, send)}
+            ${renderTable(tableOpts, state, send)}
           </div>
         </div>
 
       </main>
     `
   }
+
+  function search (term) { send('setSearchTerm', term) }
 }
 
 function edit (state, send) {
   if (!state.editTarget) return ''
 
-  var agent = state.editTarget.asHero
-  var object = state.editTarget.map
+  var agent = state.editTarget.agent
+  var target = state.editTarget.target
 
-  return renderEdit(agent, object, 'on', function (rating) {
+  return renderEdit(agent, target, 'on', function (rating) {
     if (!rating) return send('cancelEditCombo')
 
     send('rateMapCombo', {
-      asHero: rating.agent,
-      map: rating.object,
+      agent: rating.agent,
+      target: rating.target,
       rating: rating.rating
     })
   })

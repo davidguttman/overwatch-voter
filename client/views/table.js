@@ -1,61 +1,60 @@
 const get = require('lodash/get')
 const html = require('choo/html')
 
-module.exports = function (state, prev, send) {
+module.exports = function (opts, state, send) {
+  var agents = opts.agents
+  var combos = opts.combos
+  var targets = opts.targets
+
+  var onRate = opts.onRate
+  var onSearch = opts.onSearch
+  var onHighlight = opts.onHighlight
+
   return html`
     <table class='table table-header-rotated'>
       <thead>
         <tr>
           <th></th>
-          ${state.sortedMapHeroes.map(h => html`
+          ${agents.map(agent => html`
             <th class='rotate'>
-              <div><span>${h.name}</span></div>
+              <div><span>${agent.name}</span></div>
             </th>
           `)}
         </tr>
       </thead>
       <tbody>
-        ${state.filteredMaps.map(renderRow)}
+        ${targets.map(renderRow)}
       </tbody>
     </table>
   `
 
-  function renderRow (map) {
+  function renderRow (target) {
     return html`
       <tr>
         <th
           onclick=${(e) => {
-            if (map.name === state.searchTerm) {
-              send('setSearchTerm', '')
-            } else {
-              send('setSearchTerm', map.name)
-            }
+            target.name === state.searchTerm
+            ? onSearch('')
+            : onSearch(target.name)
           }}
           class='row-header pointer dim'>
-          ${map.name}
+          ${target.name}
         </th>
-        ${state.sortedMapHeroes.map((asHero, j) => {
-          return renderCell(asHero, map)
-        })}
+        ${agents.map((agent) => { return renderCell(agent, target) })}
       </tr>
     `
   }
 
-  function renderCell (asHero, map) {
+  function renderCell (agent, target) {
     var value = '?'
     var style = ''
-    if (map.name === asHero.name) return html`<td></td>`
+    if (target.name === agent.name) return html`<td></td>`
 
-    var combo = {
-      asHero: asHero.name,
-      map: map.name
-    }
-
-    var rating = get(state.heroMaps, [asHero.name, map.name])
+    var combo = get(combos, [agent.name, target.name])
     var displayRating
 
-    if (rating) {
-      displayRating = rating.localRating || rating.rating
+    if (combo) {
+      displayRating = combo.localRating || combo.rating
 
       value = {5: 'A', 4: 'B', 3: 'C', 2: 'D', 1: 'F', undefined: '?'}[displayRating]
       style = {
@@ -68,14 +67,14 @@ module.exports = function (state, prev, send) {
       }[displayRating]
     }
 
-    var nVotes = (rating || {}).count || 0
+    var nVotes = (combo || {}).count || 0
 
     return html`
       <td
-        onclick=${(e) => send('startEditCombo', combo)}
-        onmouseover=${(e) => send('setHighlight', rating)}
+        onclick=${(e) => onRate(combo)}
+        onmouseover=${(e) => onHighlight(combo)}
         style='cursor: pointer'
-        title='${asHero.name} on ${map.name} (${nVotes} ratings)'
+        title='${agent.name} on ${target.name} (${nVotes} ratings)'
         class=${'dim ' + style} >
         ${value}
       </td>

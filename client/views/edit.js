@@ -1,6 +1,6 @@
 const html = require('choo/html')
 
-module.exports = function (agent, object, modifier, cb) {
+module.exports = function (agent, target, modifier, cb) {
   const gradeButtons = [
     {letter: 'A', color: 'green'},
     {letter: 'B', color: 'dark-green'},
@@ -12,7 +12,7 @@ module.exports = function (agent, object, modifier, cb) {
   return html`
     <div class='tc modal bg-dark-gray pa5'>
       <div class='f1 center'>
-        How would you rate <strong>${agent}'s</strong> ability ${modifier} <strong>${object}</strong>?
+        How would you rate <strong>${agent}'s</strong> ability ${modifier} <strong>${target}</strong>?
       </div>
 
       <section class="pa3 pa4-m pa5-l center">
@@ -38,7 +38,7 @@ module.exports = function (agent, object, modifier, cb) {
   function rate (rating) {
     cb({
       agent: agent,
-      object: object,
+      target: target,
       rating: rating
     })
   }

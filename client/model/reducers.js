@@ -23,7 +23,7 @@ module.exports = {
   setMapRatings: (ratingList, state) => {
     var heroMaps = {}
     ratingList.forEach(function (combo) {
-      set(heroMaps, [combo.asHero, combo.map], combo)
+      set(heroMaps, [combo.agent, combo.target], combo)
     })
     state.heroMaps = heroMaps
     state.loading = false
@@ -31,7 +31,7 @@ module.exports = {
   },
 
   setMapRating: (rating, state) => {
-    var path = [rating.asHero, rating.map, 'rating']
+    var path = [rating.agent, rating.target, 'rating']
     set(state.heroMaps, path, rating.rating)
     return state
   },

@@ -30,9 +30,9 @@ module.exports = {
 
   fetchAllMaps: function (data, state, send, done) {
     var combos = []
-    maps.forEach(function (map) {
-      heroes.forEach(function (asHero) {
-        combos.push({asHero: asHero.name, map: map.name})
+    maps.forEach(function (target) {
+      heroes.forEach(function (agent) {
+        combos.push({agent: agent.name, target: target.name})
       })
     })
 
@@ -62,7 +62,7 @@ module.exports = {
   rateMapCombo: function (data, state, send, done) {
     send('setMapRating', data, function () { })
 
-    db.setMapRating(data.asHero, data.map, data.rating, function (err) {
+    db.setMapRating(data.agent, data.target, data.rating, function (err) {
       if (err) return done(err)
       send('cancelEditCombo', null, done)
     })
@@ -88,15 +88,15 @@ function getCounterCombo (combo, cb) {
 }
 
 function getMapCombo (combo, cb) {
-  var asHero = combo.asHero
-  var map = combo.map
+  var agent = combo.agent
+  var target = combo.target
 
-  db.getMapRating(asHero, map, function (err, rating) {
+  db.getMapRating(agent, target, function (err, rating) {
     if (err) return cb(err)
 
     cb(null, {
-      asHero: asHero,
-      map: map,
+      agent: agent,
+      target: target,
       rating: (rating || {}).rating,
       localRating: (rating || {}).localRating,
       dist: (rating || {}).dist,

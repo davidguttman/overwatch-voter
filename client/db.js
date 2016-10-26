@@ -3,11 +3,11 @@ var firebase = require('firebase')
 var AsyncCache = require('async-cache')
 
 var ref = firebase.initializeApp({
-    apiKey: "AIzaSyDXaSdl2wNICfAOYXz68XWUuD55vG4CNuY",
-    authDomain: "overwatch-voter.firebaseapp.com",
-    databaseURL: "https://overwatch-voter.firebaseio.com",
-    storageBucket: "overwatch-voter.appspot.com",
-    messagingSenderId: "1019798740074"
+  apiKey: 'AIzaSyDXaSdl2wNICfAOYXz68XWUuD55vG4CNuY',
+  authDomain: 'overwatch-voter.firebaseapp.com',
+  databaseURL: 'https://overwatch-voter.firebaseio.com',
+  storageBucket: 'overwatch-voter.appspot.com',
+  messagingSenderId: '1019798740074'
 })
 
 var uid
@@ -23,7 +23,7 @@ var loginCache = new AsyncCache({
 
 var ratingCounts = varhash({})
 
-var db = module.exports = {
+module.exports = {
   getTotalCounts: getTotalCounts,
   setCounterRating: loginify(setCounterRating),
   setMapRating: loginify(setMapRating),
@@ -37,13 +37,13 @@ function createKey (asHero, againstHero) {
 
 function query (ref, _key, cb) {
   var key = _key.replace(/\./g, '')
-  ref.database().ref().child(key).orderByPriority().once('value', function(snap) {
+  ref.database().ref().child(key).orderByPriority().once('value', function (snap) {
     cb(null, snap)
   }, cb)
 }
 
 function signIn (cb) {
-  ref.auth().onAuthStateChanged(function(user) {
+  ref.auth().onAuthStateChanged(function (user) {
     if (!user) return ref.auth().signInAnonymously()
 
     cb(null, user.uid)
@@ -51,7 +51,7 @@ function signIn (cb) {
 }
 
 function getTotalCounts (cb) {
-  ratingCounts(function(allCounts) {
+  ratingCounts(function (allCounts) {
     var totalCount = 0
     for (var pairKey in allCounts) {
       totalCount += allCounts[pairKey]
@@ -68,7 +68,7 @@ function setCounterRating (asHero, againstHero, rating, cb) {
     againstHero.replace(/\./g, '')
   )
 
-  localStorage.setItem(pairKey, rating)
+  window.localStorage.setItem(pairKey, rating)
   var ratingKey = ['heroCounters', pairKey, uid].join('/')
   ref
     .database()
@@ -87,7 +87,7 @@ function setMapRating (asHero, map, rating, cb) {
     map.replace(/\./g, '')
   )
 
-  localStorage.setItem(pairKey, rating)
+  window.localStorage.setItem(pairKey, rating)
   var ratingKey = ['heroMaps', pairKey, uid].join('/')
   ref
     .database()
@@ -108,11 +108,11 @@ function getMapRating (asHero, map, cb) {
 
 function getRating (type, a, b, cb) {
   var pairKey = createKey(a, b)
-  var localStr = localStorage.getItem(pairKey)
+  var localStr = window.localStorage.getItem(pairKey)
   var local = localStr ? parseFloat(localStr) : null
 
   var childKey = [type, pairKey].join('/')
-  query(ref, childKey, function(err, snap) {
+  query(ref, childKey, function (err, snap) {
     if (err) return cb(err)
 
     var n = snap.numChildren()
@@ -128,8 +128,8 @@ function getRating (type, a, b, cb) {
     ratingCounts.put(pairKey, n)
 
     var i = 0
-    var mid = Math.floor(n/2)
-    snap.forEach(function(cSnap) {
+    var mid = Math.floor(n / 2)
+    snap.forEach(function (cSnap) {
       if (i === mid) result.rating = cSnap.val()
       result.dist[cSnap.val()] += 1
       i++
@@ -143,6 +143,7 @@ function loginify (fn) {
   return function () {
     var args = Array.prototype.slice.call(arguments)
     loginCache.get('a', function (err) {
+      if (err) return console.error(err)
       fn.apply(null, args)
     })
   }
