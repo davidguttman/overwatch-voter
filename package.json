@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "budo client/index.js --live --pushstate -- -t [ sheetify/transform -u sheetify-cssnext ] -t es2020",
+    "dev": "budo client/index.js --live --pushstate -- -t [ sheetify/transform -u sheetify-cssnext ] -t es2020 -g yo-yoify",
     "build": "browserify client/index.js -t [ sheetify/transform -u sheetify-cssnext ] -t es2020 -p [ css-extract -o dist/bundle.css ] | uglifyjs -mc > dist/index.js && cssnano dist/bundle.css dist/bundle.min.css",
     "disc": "browserify client/index.js --full-paths -t [ sheetify/transform -u sheetify-cssnext ] -t es2020  -p [ css-extract -o dist/bundle.css ] | discify > disc.html",
     "deploy": "npm run build && surge dist"
@@ -28,7 +28,8 @@
     "observ-varhash": "^1.0.8",
     "sheetify": "^5.1.1",
     "sheetify-cssnext": "^1.0.7",
-    "tachyons": "^4.5.4"
+    "tachyons": "^4.5.4",
+    "yo-yoify": "^3.4.1"
   },
   "devDependencies": {
     "browserify": "^13.1.0",
