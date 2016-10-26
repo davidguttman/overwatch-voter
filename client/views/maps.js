@@ -1,13 +1,12 @@
 const html = require('choo/html')
-const xtend = require('xtend')
 
-const renderEdit = require('./edit')
-const renderTable = require('./table')
-const renderHeader = require('./header')
-const renderSearch = require('./search')
-const renderLoading = require('./loading')
-const renderInstructions = require('./instructions')
-const renderDistribution = require('./distribution')
+const renderEdit = require('./components/edit')
+const renderTable = require('./components/table')
+const renderHeader = require('./components/header')
+const renderSearch = require('./components/search')
+const renderLoading = require('./components/loading')
+const renderInstructions = require('./components/instructions')
+const renderDistribution = require('./components/distribution')
 
 var fetched = false
 module.exports = function (state, prev, send) {
@@ -15,12 +14,6 @@ module.exports = function (state, prev, send) {
     fetched = true
     send('fetchAllMaps')
   }
-
-  var highlight = state.highlight || {}
-  var combo = xtend(highlight, {
-    agent: highlight.agent,
-    target: highlight.target
-  })
 
   var tableOpts = {
     agents: state.sortedMapHeroes,
@@ -45,7 +38,7 @@ module.exports = function (state, prev, send) {
           <div class='fl w-25 pa2 pt6 light-gray'>
             ${renderInstructions(instructions())}
             ${renderSearch(state.searchTerm, search)}
-            ${renderDistribution(combo)}
+            ${renderDistribution(state.highlight)}
           </div>
 
           <div class='fl w-75 pa2'>
