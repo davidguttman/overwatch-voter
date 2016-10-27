@@ -4,6 +4,7 @@ const renderEdit = require('./components/edit')
 const renderTable = require('./components/table')
 const renderHeader = require('./components/header')
 const renderSearch = require('./components/search')
+const renderExport = require('./components/export')
 const renderLoading = require('./components/loading')
 const renderInstructions = require('./components/instructions')
 const renderDistribution = require('./components/distribution')
@@ -16,6 +17,7 @@ module.exports = function (state, prev, send) {
   }
 
   var tableOpts = {
+    ratingType: 'synergy',
     agents: state.sortedSynergyHeroes,
     targets: state.filteredHeroes,
     combos: state.heroSynergy,
@@ -43,6 +45,7 @@ module.exports = function (state, prev, send) {
 
           <div class='fl w-75 pa2'>
             ${renderTable(tableOpts, state, send)}
+            ${renderExport(tableOpts)}
           </div>
         </div>
 
