@@ -16,7 +16,7 @@ module.exports = function (state, prev, send) {
   }
 
   var tableOpts = {
-    agents: state.sortedMapHeroes,
+    agents: state.sortedCounterHeroes,
     targets: state.filteredHeroes,
     combos: state.heroCounters,
     onSearch: search,
