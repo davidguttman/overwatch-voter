@@ -4,6 +4,7 @@ module.exports = [
   {name: 'Pharah', type: 'attack'},
   {name: 'Reaper', type: 'attack'},
   {name: 'Soldier: 76', type: 'attack'},
+  {name: 'Sombra', type: 'attack'},
   {name: 'Tracer', type: 'attack'},
 
   {name: 'Bastion', type: 'defensive'},
@@ -23,5 +24,5 @@ module.exports = [
   {name: 'Lucio', type: 'support'},
   {name: 'Mercy', type: 'support'},
   {name: 'Symmetra', type: 'support'},
-  {name: 'Zenyatta', type: 'support'},
+  {name: 'Zenyatta', type: 'support'}
 ]
