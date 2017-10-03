@@ -1,6 +1,8 @@
 module.exports = [
   {name: 'Hanamura - Defend', type: 'assault'},
   {name: 'Hanamura - Attack', type: 'assault'},
+  {name: 'Horizon Lunar Colony - Defend', type: 'assault'},
+  {name: 'Horizon Lunar Colony - Attack', type: 'assault'},
   {name: 'Temple of Anubis - Defend', type: 'assault'},
   {name: 'Temple of Anubis - Attack', type: 'assault'},
   {name: 'Volskaya Industries - Defend', type: 'assault'},
@@ -8,6 +10,8 @@ module.exports = [
 
   {name: 'Dorado - Defend', type: 'escort'},
   {name: 'Dorado - Attack', type: 'escort'},
+  {name: 'Junkertown - Defend', type: 'escort'},
+  {name: 'Junkertown - Attack', type: 'escort'},
   {name: 'Route 66 - Defend', type: 'escort'},
   {name: 'Route 66 - Attack', type: 'escort'},
   {name: 'Watchpoint: Gibraltar - Defend', type: 'escort'},
@@ -31,4 +35,7 @@ module.exports = [
   {name: 'Nepal - Sanctum', type: 'koth'},
   {name: 'Nepal - Temple', type: 'koth'},
   {name: 'Nepal - Village', type: 'koth'},
+  {name: 'Oasis - City Center', type: 'koth'},
+  {name: 'Oasis - Gardens', type: 'koth'},
+  {name: 'Oasis - University', type: 'koth'},
 ]
