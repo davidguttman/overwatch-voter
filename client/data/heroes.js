@@ -1,4 +1,5 @@
 module.exports = [
+  {name: 'Doomfist', type: 'attack'},
   {name: 'Genji', type: 'attack'},
   {name: 'McCree', type: 'attack'},
   {name: 'Pharah', type: 'attack'},
@@ -15,6 +16,7 @@ module.exports = [
   {name: 'Widowmaker', type: 'defensive'},
 
   {name: 'D.Va', type: 'tank'},
+  {name: 'Orisa', type: 'tank'},
   {name: 'Reinhardt', type: 'tank'},
   {name: 'Roadhog', type: 'tank'},
   {name: 'Winston', type: 'tank'},
